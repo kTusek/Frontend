@@ -4,13 +4,13 @@
 
       <!-- Email input -->
       <div class="form-outline mb-4">
-        <input type="email" id="loginName" class="form-control" />
-        <label class="form-label" for="loginName">Email or username</label>
+        <input v-model="email" type="email" id="loginName" class="form-control" />
+        <label class="form-label" for="loginName">Email</label>
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" />
+        <input v-model="password" type="password" id="loginPassword" class="form-control" />
         <label class="form-label" for="loginPassword">Password</label>
       </div>
 
@@ -26,7 +26,7 @@
       </div>
 
       <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+      <button class="btn btn-primary btn-block mb-4">Sign in</button>
 
       <!-- Register buttons -->
       <div class="text-center">
@@ -35,3 +35,17 @@
     </form>
     </div>
 </template>
+
+<script>
+
+export default {
+  data:function(){
+    return{
+      email:'',
+      password:''
+    }
+  },
+  
+}
+
+</script>

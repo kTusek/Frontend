@@ -43,6 +43,7 @@
                         <router-link to="/about" class="nav-item nav-link">About us</router-link>
                         <router-link to="/login" class="nav-link" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab">Login</router-link>
                         <router-link to="/register" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab">Register</router-link>
+                        <p v-if="store.authenticated">{{store.currentUserEmail}}</p>
                     </div>
                 </div>
             </nav>
@@ -50,3 +51,14 @@
     </div>
 </div>
 </template>
+
+<script>
+import store from '@/store.js'
+export default{
+    data:function(){
+    return { 
+      store
+    }
+  },
+}
+</script>

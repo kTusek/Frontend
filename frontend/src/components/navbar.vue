@@ -41,9 +41,10 @@
                         <router-link to="/" class="nav-item nav-link">Home</router-link>
                         <router-link to="/services" class="nav-item nav-link">Services</router-link>
                         <router-link to="/about" class="nav-item nav-link">About us</router-link>
-                        <router-link to="/login" class="nav-link" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab">Login</router-link>
-                        <router-link to="/register" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab">Register</router-link>
-                        <p v-if="store.authenticated">{{store.currentUserEmail}}</p>
+                        <router-link v-if="auth.userEmail==''" to="/login" class="nav-link" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab">Login</router-link>
+                        <router-link v-if="auth.userEmail==''" to="/register" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab">Register</router-link>
+                        <p class="userInfo" v-if="auth.userEmail!==''">{{auth.userEmail}}</p>
+                        <router-link to="" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab" @click="signOut()">Sign out</router-link>
                     </div>
                 </div>
             </nav>
@@ -54,11 +55,20 @@
 
 <script>
 import store from '@/store.js'
+import { Auth } from '@/service/connect.js';
 export default{
     data:function(){
     return { 
-      store
+      store,
+      auth: Auth.state,
     }
   },
+  methods:{
+    signOut()
+    {
+        Auth.logout();
+        this.$router.go();
+	},
+  }
 }
 </script>

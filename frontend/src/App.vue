@@ -1,11 +1,7 @@
 <template>
   <div id="app">
     
-    <!-- Topbar End -->
-
-    <!-- Navbar Start -->
     <Navbar/>
-    <!-- Navbar End -->
     
     <router-view/>
     <Footer />

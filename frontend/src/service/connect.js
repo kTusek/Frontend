@@ -23,6 +23,42 @@ let Auth = {
         let post = await Service.post('/user', userData);
         return post
     },
+    async login(email, password){
+        let response = await Service.post("/login",{
+           email: email,
+           password: password
+        });
+        console.log(response)
+        let user = await response.data;
+        localStorage.setItem("user", JSON.stringify(user)); 
+        return true;
+    },
+    logout(){
+        localStorage.removeItem("user");
+    },
+    getUser(){
+      return JSON.parse(localStorage.getItem("user"))  
+    },
+    getToken(){
+      let user = Auth.getUser();
+      if(user && user.token){
+          return user.token
+      }
+      else{
+          return false;
+      }
+    },
+    state: {
+        get authenticated() {
+            return Auth.authenticated();
+        },
+        get userEmail(){
+            let user = Auth.getUser()
+            if (user){
+                return user.email;
+            }
+        }
+    }
 }
 
 export  { Auth }

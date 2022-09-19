@@ -9514,6 +9514,13 @@ h6,
   outline: none;
 }
 
+.userInfo {
+  padding: 30px 15px;
+  color: #757575;
+  font-weight: 600;
+  outline: none;
+}
+
 .navbar-light .navbar-nav .nav-link:hover,
 .navbar-light .navbar-nav .nav-link.active {
   color: #46C6CE;

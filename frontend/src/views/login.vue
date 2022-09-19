@@ -26,7 +26,7 @@
       </div>
 
       <!-- Submit button -->
-      <button class="btn btn-primary btn-block mb-4">Sign in</button>
+      <button @click.prevent="login()" class="btn btn-primary btn-block mb-4">Sign in</button>
 
       <!-- Register buttons -->
       <div class="text-center">
@@ -37,15 +37,41 @@
 </template>
 
 <script>
-
+import { Auth } from '@/service/connect.js'
+import store from '@/store.js'
 export default {
   data:function(){
     return{
       email:'',
-      password:''
+      password:'',
+      empty:null,
     }
   },
-  
+  methods:{
+    async login(){
+		
+		let success=false;
+		
+		if(this.email=='' || this.password==''){
+			
+		 	this.empty=true;
+        	
+		}
+		success = await Auth.login(this.email, this.password);
+		
+        if(success == true){
+            store.authenticated = true;
+            store.email=this.email;
+            this.$router.push({path:'/'})
+            .then(() => {
+              this.$router.go();
+            });
+        console.log('Login result', success);
+
+        }
+        console.log("Authenticated: ",store.authenticated)
+      },
+  }
 }
 
 </script>

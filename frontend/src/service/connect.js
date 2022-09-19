@@ -2,7 +2,7 @@ import $router from '@/router';
 import axios from 'axios';
 
 let Service = axios.create({
-    baseURL: 'http://localhost:5000/',
+    baseURL: 'http://localhost:3100/',
     timeout: 1000
 })
 
@@ -61,4 +61,11 @@ let Auth = {
     }
 }
 
-export  { Auth }
+let Comments = {
+    async postComment(commentData){
+        let sendData = await Service.post('/comment', commentData);
+        return sendData;
+    }
+}
+
+export  { Auth, Comments }

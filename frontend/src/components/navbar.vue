@@ -41,10 +41,10 @@
                         <router-link to="/" class="nav-item nav-link">Home</router-link>
                         <router-link to="/services" class="nav-item nav-link">Services</router-link>
                         <router-link to="/about" class="nav-item nav-link">About us</router-link>
-                        <router-link v-if="auth.userEmail==''" to="/login" class="nav-link" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab">Login</router-link>
-                        <router-link v-if="auth.userEmail==''" to="/register" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab">Register</router-link>
+                        <router-link v-if="!auth.userEmail" to="/login" class="nav-link" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab">Login</router-link>
+                        <router-link v-if="!auth.userEmail" to="/register" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab">Register</router-link>
                         <p class="userInfo" v-if="auth.userEmail!==''">{{auth.userEmail}}</p>
-                        <router-link to="" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab" @click="signOut()">Sign out</router-link>
+                        <router-link to="" v-if="auth.userEmail" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab" @click="signOut()">Sign out</router-link>
                     </div>
                 </div>
             </nav>

@@ -65,7 +65,20 @@ let Comments = {
     async postComment(commentData){
         let sendData = await Service.post('/comment', commentData);
         return sendData;
-    }
+    },
+    async fetchComments(){
+        let response = await Service.get(`/comments`);
+
+        let data = response.data;
+        ((data)=>{
+            return {
+                id: doc._id,
+                comment: doc.newComment,
+                postedAt: doc.postedAt
+            }    
+            });
+        return data;
+    },
 }
 
 export  { Auth, Comments }

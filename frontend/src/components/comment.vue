@@ -2,26 +2,16 @@
 <div class="container-fluid py-5">
         <div class="container">
             <h1 class="display-4 text-center mb-5">Client Reviews</h1>
-            <div class="owl-carousel testimonial-carousel">
+            <div v-for="comments in allComments" :key="comments.id" class="owl-carousel testimonial-carousel">
                 <div class="testimonial-item">
                     <img class="position-relative rounded-circle bg-white shadow mx-auto" src="@/assets/img/User_icon_2.svg.png" style="width: 100px; height: 100px; padding: 12px; margin-bottom: -50px; z-index: 1;" alt="">
                     <div class="bg-light text-center p-4 pt-0">
-                        <h5 class="font-weight-medium mt-5">Joe Doe</h5>
-                        <p class="m-0">Totally satisfied with quality of this laundry service.</p>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <img class="position-relative rounded-circle bg-white shadow mx-auto" src="@/assets/img/User_icon_2.svg.png" style="width: 100px; height: 100px; padding: 12px; margin-bottom: -50px; z-index: 1;" alt="">
-                    <div class="bg-light text-center p-4 pt-0">
-                        <h5 class="font-weight-medium mt-5">Anna Peterson</h5>
-                        <p class="m-0">Everything was dry & clean, 5/5!</p>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <img class="position-relative rounded-circle bg-white shadow mx-auto" src="@/assets/img/User_icon_2.svg.png" style="width: 100px; height: 100px; padding: 12px; margin-bottom: -50px; z-index: 1;" alt="">
-                    <div class="bg-light text-center p-4 pt-0">
-                        <h5 class="font-weight-medium mt-5">Peter Jenkins</h5>
-                        <p class="m-0">Washed my suit, it was like new!</p>
+                        <h5 class="font-weight-medium mt-5">{{comments.user}}</h5>
+                        <p v-if="comments.review=='Good'"><Icon icon="ion:thumbs-up" color="green" /></p>
+                        <p v-if="comments.review=='Bad'"><Icon icon="ion:thumbs-up" color="red" :rotate="2" /></p>
+                        <p class="m-0" style="color:black;font-size:12px">{{comments.newComment}}</p>
+                        <br>
+                        <p class="m-0" style="font-style:italic;font-size:10px">{{comments.postedAt}}</p>
                     </div>
                 </div>
             </div>
@@ -54,6 +44,7 @@
 <script>
 import { Icon } from '@iconify/vue';
 import { Comments } from '@/service/connect.js'
+import { Auth } from '@/service/connect.js'
 
 export default {
   name: 'Home',
@@ -62,7 +53,10 @@ export default {
 	},
   data:function(){
     return{
-      newComment:''
+      auth: Auth.state,
+      newComment:'',
+      allComments:[],
+      review:'',
     }
   },
   methods:{
@@ -71,11 +65,28 @@ export default {
       let time = new Date(Date.now()).toLocaleTimeString()
       let comment = {
                 newComment: this.newComment,
-                postedAt: date + "in " + time
+                postedAt: date + " in " + time,
+                user: this.auth.userEmail,
+                review: this.review,
             }
-        console.log(comment)
-       Comments.postComment(comment);
+      console.log(comment)
+      Comments.postComment(comment);
+      this.$router.push({path:'/'})
+            .then(() => {
+              this.$router.go();
+      });
+    },
+    like(){
+      this.review = 'Good';
+    },
+    dislike(){
+      this.review = 'Bad';
     }
+
+  },
+  async created(){
+    this.allComments = await Comments.fetchComments();
+    console.log("all comments: ",this.allComments)
   }
 }
 </script>

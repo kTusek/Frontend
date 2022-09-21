@@ -5,7 +5,7 @@
     <form class="form-inline">
       <div class="form-group">
       <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Laundry dye</label>
-      <select class="custom-select my-1 mr-sm-2 col-md-8" id="inlineFormCustomSelectPref">
+      <select v-model="selectedLaundryWash" class="custom-select my-1 mr-sm-2 col-md-8" id="inlineFormCustomSelectPref">
         <option selected></option>
         <option value="1">Cotton, light clothing</option>
         <option value="2">Black and dark colored bedding</option>
@@ -16,36 +16,74 @@
       
        
       <label for="exampleInputEmail1" style="margin-right:8px">Number of clothes</label>
-      <input type="text" class="form-control my-1 mr-sm-2 col-md-2" placeholder="Enter number">
-      <input class="form-check-input" style="margin-left:20px" type="checkbox" id="gridCheck">
+      <input v-model="clothes_number" type="text" class="form-control my-1 mr-sm-2 col-md-2" placeholder="Enter number">
+
+      <input v-model="drying" class="form-check-input" style="margin-left:20px" type="checkbox" id="gridCheck">
       <label class="form-check-label">
         Drying
       </label>
 
-      <input class="form-check-input" style="margin-left:20px" type="checkbox">
+      <input v-model="ironing" class="form-check-input" style="margin-left:20px" type="checkbox">
       <label class="form-check-label">
         Ironing
       </label>
 
-      <input class="form-check-input" style="margin-left:20px" type="checkbox">
+      <input v-model="dry_cleaning" class="form-check-input" style="margin-left:20px" type="checkbox">
       <label class="form-check-label">
         Dry cleaning
       </label>
 
-      <input class="form-check-input" style="margin-left:20px" type="checkbox">
+      <input v-model="sensitive_goods" class="form-check-input" style="margin-left:20px" type="checkbox">
       <label class="form-check-label">
         Washing sensitive goods at low temperatures
       </label>
       
-    </form><button class="btn btn-secondary" style="border-radius:15%; margin-top:20px; margin-left:1.5px; color:white; font-weight:bold">Confirm</button>
+    </form><button @click="sendLaundryData()" class="btn btn-secondary" style="border-radius:15%; margin-top:20px; margin-left:1.5px; color:white; font-weight:bold">Confirm</button>
     </div>
   </div>
 </template>
 <script>
-
+import { Laundry } from '@/service/connect.js'
 export default{
-components:{
-}
+  components:{
+  },
+  data:function(){
+    return {
+      selectedLaundryWash:'',
+      clothes_number:'',
+      drying:'',
+      ironing:'',
+      dry_cleaning:'',
+      sensitive_goods:''
+    }
+  },
+  methods: {
+    sendLaundryData(){
+      if(this.drying == true){
+        this.drying = 'Drying'
+      }
+      if(this.ironing == true){
+        this.ironing = 'Ironing'
+      }
+      if(this.dry_cleaning == true){
+        this.dry_cleaning = 'Dry cleaning'
+      }
+      if(this.sensitive_goods == true){
+        this.sensitive_goods = 'Washing sensitive goods at low temperatures'
+      }
+      let laundryData = 
+      {
+        selectedLaundryWash: this.selectedLaundryWash,
+        clothes_number: this.clothes_number,
+        drying: this.drying,
+        ironing: this.ironing,
+        dry_cleaning: this.dry_cleaning,
+        sensitive_goods: this.sensitive_goods
+      }
+      Laundry.postLaundryData(laundryData);
+      this.$router.push({ path:'/' })
+    }
+  }
 }
 </script>
 

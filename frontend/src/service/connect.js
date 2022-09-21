@@ -61,6 +61,14 @@ let Auth = {
     }
 }
 
+let Laundry = {
+    async postLaundryData(laundryData){
+        let sendData = await Service.post('/laundry_data', laundryData);
+        return sendData;
+    },
+    
+}
+
 let Comments = {
     async postComment(commentData){
         let sendData = await Service.post('/comment', commentData);
@@ -81,4 +89,4 @@ let Comments = {
     },
 }
 
-export  { Auth, Comments }
+export  { Auth, Comments, Laundry }

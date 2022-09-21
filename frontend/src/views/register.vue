@@ -73,6 +73,7 @@ export default {
                 password:this.password,
             }
             
+            
             await Auth.signUp(userData).then(() => {
                 this.$router.push({ path: '/' });
                 store.authenticated=true;

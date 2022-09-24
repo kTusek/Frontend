@@ -70,18 +70,6 @@ let Laundry = {
         let response = await Service.get(`/laundry_data/${userEmail}`);
 
         let data = await response.data;
-        ((doc)=>{
-            return {
-                id: doc._id,
-                selectedLaundryWash: doc.selectedLaundryWash,
-                clothes_number: doc.clothes_number,
-                drying: doc.drying,
-                ironing: doc.ironing,
-                dry_cleaning: doc.dry_cleaning,
-                sensitive_goods: doc.sensitive_goods,
-                user: doc.user
-            }    
-            });
         return data;
     },
     

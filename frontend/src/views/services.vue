@@ -38,7 +38,17 @@
       <label class="form-check-label">
         Washing sensitive goods at low temperatures
       </label>
-      <p v-if="service_empty" style="color:red">Please at least select laundry dye and enter number of clothes!</p>
+
+      
+      <div class="radio-item" style="margin-right:10px">
+          <input type="radio" id="ritemb" name="ritem" value="personal_pickup" v-model="picked">
+          <label for="ritemb">Personal pickup</label>
+      </div>
+      <div class="radio-item">
+          <input type="radio" id="ritemb" name="ritem" value="delivery" v-model="picked">
+          <label for="ritemb">Delivery</label>
+      </div>
+      <p v-if="service_empty" style="color:red">Please at least select laundry dye, enter number of clothes and a pickup type!</p>
     </form><button @click="sendLaundryData()" class="btn btn-secondary" style="border-radius:15%; margin-top:20px; margin-left:1.5px; color:white; font-weight:bold">Confirm</button>
     </div>
   </div>
@@ -64,6 +74,8 @@ export default{
       dry_cleaning:'',
       sensitive_goods:'',
       service_empty: false,
+      personal_pickup:'',
+      picked:''
     }
   },
   methods: {
@@ -71,7 +83,7 @@ export default{
       let date = new Date(Date.now()).toLocaleDateString()
       let time = new Date(Date.now()).toLocaleTimeString()
 
-      if(this.selectedLaundryWash!=="" || this.clothes_number!==""){
+    if(this.selectedLaundryWash!=="" || this.clothes_number!=="" || this.pickup_type!=""){
       if(this.drying == true){
         this.drying = 'Drying'
       }
@@ -108,6 +120,7 @@ export default{
       else if(this.selectedLaundryWash=="4"){
         this.selectedLaundryWash = "Any synthetic clothing"
       }
+      console.log("Picked::",this.picked)
       
         let laundryData = 
         {
@@ -117,11 +130,15 @@ export default{
           ironing: this.ironing,
           dry_cleaning: this.dry_cleaning,
           sensitive_goods: this.sensitive_goods,
+          pickup_type: this.picked,
           user: this.auth.userEmail,
           posted_at: date + ' in ' + time
         }
         Laundry.postLaundryData(laundryData);
         this.$router.push({ path:'/reservation_laundry' })
+          .then(() => { 
+            this.$router.go();
+          });
       }
       else{
         this.service_empty = true;

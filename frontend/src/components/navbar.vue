@@ -44,6 +44,7 @@
                         <router-link v-if="!auth.userEmail" to="/login" class="nav-link" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab">Login</router-link>
                         <router-link v-if="!auth.userEmail" to="/register" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab">Register</router-link>
                         <p class="userInfo" v-if="auth.userEmail!==''">{{auth.userEmail}}</p>
+                        <router-link v-if="auth.userEmail" to="/reservation_laundry" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab">Reserved laundry</router-link>
                         <router-link to="" v-if="auth.userEmail" class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab" @click="signOut()">Sign out</router-link>
                     </div>
                 </div>

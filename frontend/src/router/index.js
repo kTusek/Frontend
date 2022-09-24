@@ -4,6 +4,7 @@ import Services from '../views/services.vue'
 import Login from '../views/login.vue'
 import Register from '../views/register.vue'
 import About from '../views/about.vue'
+import ReservationLaundry from '../views/reservation_laundry.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     name: 'About',
     component: About
   },
+  {
+    path: '/reservation_laundry',
+    name: 'ReservationLaundry',
+    component: ReservationLaundry
+  }
 ]
 
 const router = createRouter({

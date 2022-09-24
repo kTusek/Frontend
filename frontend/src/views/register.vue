@@ -75,7 +75,7 @@ export default {
             
             
             await Auth.signUp(userData).then(() => {
-                this.$router.push({ path: '/' });
+                this.$router.push({ path: '/login' });
                 store.authenticated=true;
                 store.currentUserEmail=this.email;
             });
